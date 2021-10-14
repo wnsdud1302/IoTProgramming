@@ -1,5 +1,7 @@
 #include <netdb.h>
 #include<stdio.h>
+#include<arpa/inet.h>
+#include<netinet/in.h>
 struct hostent *gethostbyname(const char *hostname);
 extern int h_errno;
 
