@@ -16,7 +16,7 @@ void read_childproc(int sig){
 
 int main(int argc, char *argv[]){
     pid_t pid;
-    struct sigcation act;
+    struct sigaction act;
     act.sa_handler=read_childproc;
     sigemptyset(&act.sa_mask);
     act.sa_flags = 0;
