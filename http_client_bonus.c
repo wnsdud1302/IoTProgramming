@@ -12,7 +12,8 @@ int main(int argc, char **argv)
  int sock;
  int retval;
  char buf[BUFSIZE];
-
+ FILE * fp = fopen("test.html", "w"); //출력내용을 파일에 저장하기 위해
+ struct hostent *remoteHost; //웹주소를 ip로 바꾸기 위해
  
  sock = socket(AF_INET, SOCK_STREAM, 0);
  if (sock < 0)
@@ -22,9 +23,9 @@ int main(int argc, char **argv)
 
  struct sockaddr_in client_addr;
  client_addr.sin_family = AF_INET;
- client_addr.sin_port = htons(atoi(argv[2]));//argv[2]는 포트
+ client_addr.sin_port = htons(atoi(argv[2]));
  printf("%d\n", client_addr.sin_port);
- client_addr.sin_addr.s_addr = inet_addr(argv[1]);//argv[1]는 ip주소
+ client_addr.sin_addr.s_addr = inet_addr(argv[1]);
  retval = connect(sock, (struct sockaddr * ) &client_addr, sizeof(client_addr));
  printf("_>>>%s\n", argv[1]);
  if (retval < 0)
@@ -42,8 +43,10 @@ int main(int argc, char **argv)
 
   read(sock, buf, BUFSIZE);
   printf("%s", buf); //화면에 출력
+  fprintf(fp, "%s", buf); //파일에 저장
   memset(buf, 0, BUFSIZE); //버퍼 지우기
  }
  close(sock);
+ fclose(fp);
  return 0;
 }
