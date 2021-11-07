@@ -24,9 +24,9 @@ int main(int argc, char **argv)
  client_addr.sin_family = AF_INET;
  client_addr.sin_port = htons(atoi(argv[2]));//argv[2]는 포트
  printf("%d\n", client_addr.sin_port);
- client_addr.sin_addr.s_addr = inet_addr(inet_ntoa(*struct in_addr*)name->h_addr_list[0]);
+ client_addr.sin_addr.s_addr = inet_addr(inet_ntoa(*(struct in_addr*)name->h_addr_list[0]));
  retval = connect(sock, (struct sockaddr * ) &client_addr, sizeof(client_addr));
- printf("_>>>%s\n", inet_ntoa(*struct in_addr*)name->h_addr_list[0]);
+ printf("_>>>%s\n", inet_ntoa(*(struct in_addr*)name->h_addr_list[0]));
  if (retval < 0)
  {
   printf("NOT connect!!!!!");
