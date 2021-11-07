@@ -12,19 +12,21 @@ int main(int argc, char **argv)
  int sock;
  int retval;
  char buf[BUFSIZE];
+ struct hostent *name;
  
  sock = socket(AF_INET, SOCK_STREAM, 0);
  if (sock < 0)
   return 0;
 
+  name = gethostbyname(argv[1]); 
 
  struct sockaddr_in client_addr;
  client_addr.sin_family = AF_INET;
  client_addr.sin_port = htons(atoi(argv[2]));//argv[2]는 포트
  printf("%d\n", client_addr.sin_port);
- client_addr.sin_addr.s_addr = inet_addr(argv[1]);
+ client_addr.sin_addr.s_addr = inet_addr(inet_ntoa(*struct in_addr*)name->h_addr_list[0]);
  retval = connect(sock, (struct sockaddr * ) &client_addr, sizeof(client_addr));
- printf("_>>>%s\n", argv[1]);
+ printf("_>>>%s\n", inet_ntoa(*struct in_addr*)name->h_addr_list[0]);
  if (retval < 0)
  {
   printf("NOT connect!!!!!");
